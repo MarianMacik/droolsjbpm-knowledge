@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2019 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
+/**
+ * A class to encapsulate prediction results from a {@link org.kie.internal.task.api.prediction.PredictionService}
+ * implementation.
+ */
 package org.kie.internal.task.api.prediction;
 
 import java.util.Map;
 
+/**
+ * Encapsulates results from a {@link PredictionService}.
+ */
 public class PredictionOutcome {
 
     private boolean present;
@@ -27,11 +34,23 @@ public class PredictionOutcome {
     private double confidenceThreshold;
 
     private Map<String, Object> data;
-    
+
+    /**
+     * Creates an empty prediction.
+     */
     public PredictionOutcome() {
         this.present = false;
     }
 
+    /**
+     *
+     * Returns a prediction for a prediction service with the specified confidence level, confidence threshold and
+     * outcome.
+     *
+     * @param confidenceLevel Numerical value to quantify confidence level for this prediction
+     * @param confidenceThreshold The threshold above which a prediction should be automatically accepted
+     * @param data A map containing the outcome names and values (respectively as map keys and values)
+     */
     public PredictionOutcome(double confidenceLevel, double confidenceThreshold, Map<String, Object> data) {
         this.present = data != null;        
         this.confidenceLevel = confidenceLevel;
@@ -42,7 +61,10 @@ public class PredictionOutcome {
     public boolean isPresent() {
         return this.present;
     }
-    
+
+    /**
+     * Returns whether a prediction has a confidence level above the specified threshold
+     */
     public boolean isCertain() {
         return this.present && confidenceLevel > confidenceThreshold;
     }
